@@ -34,6 +34,10 @@ export const Route = createRootRoute({
       { name: "description", content: "Premium headphones, speakers, and soundbars from GadgetHive." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "GadgetHive — Premium Audio" },
+      { name: "twitter:title", content: "GadgetHive — Premium Audio" },
+      { property: "og:description", content: "Premium headphones, speakers, and soundbars from GadgetHive." },
+      { name: "twitter:description", content: "Premium headphones, speakers, and soundbars from GadgetHive." },
     ],
     links: [
       {
