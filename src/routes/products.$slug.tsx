@@ -101,7 +101,7 @@ function ProductPage() {
             <p className="mt-6 max-w-xl text-foreground/80">{product.description}</p>
 
             <ul className="mt-8 space-y-2">
-              {product.features.map((f) => (
+              {product.features.map((f: string) => (
                 <li key={f} className="flex items-center gap-2 text-sm">
                   <Check className="h-4 w-4 text-ember" /> {f}
                 </li>
