@@ -1,0 +1,120 @@
+import headphonesBlack from "@/assets/product-headphones-black.jpg";
+import speaker from "@/assets/product-speaker.jpg";
+import soundbar from "@/assets/product-soundbar.jpg";
+import earbuds from "@/assets/product-earbuds.jpg";
+
+export type ProductCategory = "headphones" | "speakers" | "soundbars" | "accessories";
+
+export interface Product {
+  slug: string;
+  name: string;
+  type: string;
+  category: ProductCategory;
+  price: number;
+  image: string;
+  badge?: "New" | "Best Seller";
+  description: string;
+  features: string[];
+}
+
+export const PRODUCTS: Product[] = [
+  {
+    slug: "hive-pro-headphones",
+    name: "Hive Pro",
+    type: "Wireless Over-Ear Headphones",
+    category: "headphones",
+    price: 349,
+    image: headphonesBlack,
+    badge: "New",
+    description:
+      "Reference-grade 40mm drivers, adaptive noise cancellation, and 40-hour battery life. Built for studios and long flights alike.",
+    features: ["Adaptive ANC", "40h battery", "Hi-Res Audio", "Multipoint Bluetooth 5.3"],
+  },
+  {
+    slug: "swarm-portable-speaker",
+    name: "Swarm",
+    type: "Portable Bluetooth Speaker",
+    category: "speakers",
+    price: 199,
+    image: speaker,
+    badge: "Best Seller",
+    description:
+      "Pocket-room-filling sound with IP67 dust and water resistance. Pair two for true stereo wherever you land.",
+    features: ["IP67 rated", "24h battery", "Stereo pairing", "USB-C fast charge"],
+  },
+  {
+    slug: "horizon-soundbar",
+    name: "Horizon",
+    type: "5.1 Cinema Soundbar",
+    category: "soundbars",
+    price: 799,
+    image: soundbar,
+    description:
+      "Dolby Atmos, room-correcting Trueplay, and a wireless subwoofer. Movie nights, transformed.",
+    features: ["Dolby Atmos", "Wireless sub", "HDMI eARC", "Voice clarity mode"],
+  },
+  {
+    slug: "drift-earbuds",
+    name: "Drift",
+    type: "True Wireless Earbuds",
+    category: "headphones",
+    price: 179,
+    image: earbuds,
+    badge: "New",
+    description:
+      "Tuned for clarity, finished in cream and brushed brass. All-day comfort with active noise cancellation.",
+    features: ["ANC + Transparency", "8h + 24h case", "Wireless charging", "IPX4"],
+  },
+  {
+    slug: "hum-mini-speaker",
+    name: "Hum Mini",
+    type: "Compact Smart Speaker",
+    category: "speakers",
+    price: 129,
+    image: speaker,
+    description:
+      "A speaker so small it disappears, with sound that doesn't. Multi-room ready out of the box.",
+    features: ["Multi-room", "Voice control", "Wi-Fi 6", "Touch controls"],
+  },
+  {
+    slug: "echo-bookshelf",
+    name: "Echo Bookshelf",
+    type: "HiFi Bookshelf Speakers",
+    category: "speakers",
+    price: 549,
+    image: speaker,
+    description:
+      "A pair of bookshelf speakers engineered for nuance. Wood-veneer cabinets, silk-dome tweeters.",
+    features: ["Pair", "Bi-amp ready", "Bluetooth + HDMI", "Hand-finished"],
+  },
+  {
+    slug: "horizon-mini",
+    name: "Horizon Mini",
+    type: "Compact Soundbar",
+    category: "soundbars",
+    price: 449,
+    image: soundbar,
+    badge: "Best Seller",
+    description:
+      "All the clarity, half the footprint. Perfect for studio apartments and second screens.",
+    features: ["3.0 channel", "Night mode", "HDMI eARC", "Wall-mount kit included"],
+  },
+  {
+    slug: "drift-charging-pad",
+    name: "Charge Pad",
+    type: "Wireless Charging Station",
+    category: "accessories",
+    price: 89,
+    image: earbuds,
+    description: "Fast wireless charging for earbuds and phones, finished to match the Drift family.",
+    features: ["15W Qi", "Two devices", "Anti-slip base", "USB-C"],
+  },
+];
+
+export function getProduct(slug: string): Product | undefined {
+  return PRODUCTS.find((p) => p.slug === slug);
+}
+
+export function getFeatured(): Product[] {
+  return PRODUCTS.filter((p) => p.badge).slice(0, 4);
+}
