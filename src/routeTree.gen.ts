@@ -12,13 +12,21 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TechnologyRouteImport } from './routes/technology'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as ProductsRouteImport } from './routes/products'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as LearnRouteImport } from './routes/learn'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductsIndexRouteImport } from './routes/products.index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
+import { Route as DashboardProductsIndexRouteImport } from './routes/dashboard.products.index'
+import { Route as DashboardCategoriesIndexRouteImport } from './routes/dashboard.categories.index'
+import { Route as DashboardProductsCreateRouteImport } from './routes/dashboard.products.create'
+import { Route as DashboardCategoriesCreateRouteImport } from './routes/dashboard.categories.create'
 
 const TechnologyRoute = TechnologyRouteImport.update({
   id: '/technology',
@@ -35,9 +43,19 @@ const ProductsRoute = ProductsRouteImport.update({
   path: '/products',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnRoute = LearnRouteImport.update({
   id: '/learn',
   path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CartRoute = CartRouteImport.update({
@@ -60,6 +78,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsIndexRoute = ProductsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProductsRoute,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const ProductsSlugRoute = ProductsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -70,18 +98,48 @@ const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
   path: '/checkout/success',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardProductsIndexRoute = DashboardProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardCategoriesIndexRoute =
+  DashboardCategoriesIndexRouteImport.update({
+    id: '/categories/',
+    path: '/categories/',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardProductsCreateRoute = DashboardProductsCreateRouteImport.update({
+  id: '/products/create',
+  path: '/products/create',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardCategoriesCreateRoute =
+  DashboardCategoriesCreateRouteImport.update({
+    id: '/categories/create',
+    path: '/categories/create',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/learn': typeof LearnRoute
+  '/login': typeof LoginRoute
   '/products': typeof ProductsRouteWithChildren
   '/support': typeof SupportRoute
   '/technology': typeof TechnologyRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/products/$slug': typeof ProductsSlugRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/products/': typeof ProductsIndexRoute
+  '/dashboard/categories/create': typeof DashboardCategoriesCreateRoute
+  '/dashboard/products/create': typeof DashboardProductsCreateRoute
+  '/dashboard/categories/': typeof DashboardCategoriesIndexRoute
+  '/dashboard/products/': typeof DashboardProductsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -89,11 +147,17 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/learn': typeof LearnRoute
-  '/products': typeof ProductsRouteWithChildren
+  '/login': typeof LoginRoute
   '/support': typeof SupportRoute
   '/technology': typeof TechnologyRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/products/$slug': typeof ProductsSlugRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/products': typeof ProductsIndexRoute
+  '/dashboard/categories/create': typeof DashboardCategoriesCreateRoute
+  '/dashboard/products/create': typeof DashboardProductsCreateRoute
+  '/dashboard/categories': typeof DashboardCategoriesIndexRoute
+  '/dashboard/products': typeof DashboardProductsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -101,12 +165,20 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/learn': typeof LearnRoute
+  '/login': typeof LoginRoute
   '/products': typeof ProductsRouteWithChildren
   '/support': typeof SupportRoute
   '/technology': typeof TechnologyRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/products/$slug': typeof ProductsSlugRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/products/': typeof ProductsIndexRoute
+  '/dashboard/categories/create': typeof DashboardCategoriesCreateRoute
+  '/dashboard/products/create': typeof DashboardProductsCreateRoute
+  '/dashboard/categories/': typeof DashboardCategoriesIndexRoute
+  '/dashboard/products/': typeof DashboardProductsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -115,12 +187,20 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/cart'
+    | '/dashboard'
     | '/learn'
+    | '/login'
     | '/products'
     | '/support'
     | '/technology'
     | '/checkout/success'
     | '/products/$slug'
+    | '/dashboard/'
+    | '/products/'
+    | '/dashboard/categories/create'
+    | '/dashboard/products/create'
+    | '/dashboard/categories/'
+    | '/dashboard/products/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -128,23 +208,37 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cart'
     | '/learn'
-    | '/products'
+    | '/login'
     | '/support'
     | '/technology'
     | '/checkout/success'
     | '/products/$slug'
+    | '/dashboard'
+    | '/products'
+    | '/dashboard/categories/create'
+    | '/dashboard/products/create'
+    | '/dashboard/categories'
+    | '/dashboard/products'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/auth'
     | '/cart'
+    | '/dashboard'
     | '/learn'
+    | '/login'
     | '/products'
     | '/support'
     | '/technology'
     | '/checkout/success'
     | '/products/$slug'
+    | '/dashboard/'
+    | '/products/'
+    | '/dashboard/categories/create'
+    | '/dashboard/products/create'
+    | '/dashboard/categories/'
+    | '/dashboard/products/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -152,7 +246,9 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   CartRoute: typeof CartRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   LearnRoute: typeof LearnRoute
+  LoginRoute: typeof LoginRoute
   ProductsRoute: typeof ProductsRouteWithChildren
   SupportRoute: typeof SupportRoute
   TechnologyRoute: typeof TechnologyRoute
@@ -182,11 +278,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learn': {
       id: '/learn'
       path: '/learn'
       fullPath: '/learn'
       preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cart': {
@@ -217,6 +327,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products/': {
+      id: '/products/'
+      path: '/'
+      fullPath: '/products/'
+      preLoaderRoute: typeof ProductsIndexRouteImport
+      parentRoute: typeof ProductsRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/products/$slug': {
       id: '/products/$slug'
       path: '/$slug'
@@ -231,15 +355,65 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckoutSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/products/': {
+      id: '/dashboard/products/'
+      path: '/products'
+      fullPath: '/dashboard/products/'
+      preLoaderRoute: typeof DashboardProductsIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/categories/': {
+      id: '/dashboard/categories/'
+      path: '/categories'
+      fullPath: '/dashboard/categories/'
+      preLoaderRoute: typeof DashboardCategoriesIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/products/create': {
+      id: '/dashboard/products/create'
+      path: '/products/create'
+      fullPath: '/dashboard/products/create'
+      preLoaderRoute: typeof DashboardProductsCreateRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/categories/create': {
+      id: '/dashboard/categories/create'
+      path: '/categories/create'
+      fullPath: '/dashboard/categories/create'
+      preLoaderRoute: typeof DashboardCategoriesCreateRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardCategoriesCreateRoute: typeof DashboardCategoriesCreateRoute
+  DashboardProductsCreateRoute: typeof DashboardProductsCreateRoute
+  DashboardCategoriesIndexRoute: typeof DashboardCategoriesIndexRoute
+  DashboardProductsIndexRoute: typeof DashboardProductsIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardIndexRoute: DashboardIndexRoute,
+  DashboardCategoriesCreateRoute: DashboardCategoriesCreateRoute,
+  DashboardProductsCreateRoute: DashboardProductsCreateRoute,
+  DashboardCategoriesIndexRoute: DashboardCategoriesIndexRoute,
+  DashboardProductsIndexRoute: DashboardProductsIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 interface ProductsRouteChildren {
   ProductsSlugRoute: typeof ProductsSlugRoute
+  ProductsIndexRoute: typeof ProductsIndexRoute
 }
 
 const ProductsRouteChildren: ProductsRouteChildren = {
   ProductsSlugRoute: ProductsSlugRoute,
+  ProductsIndexRoute: ProductsIndexRoute,
 }
 
 const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
@@ -251,7 +425,9 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   CartRoute: CartRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   LearnRoute: LearnRoute,
+  LoginRoute: LoginRoute,
   ProductsRoute: ProductsRouteWithChildren,
   SupportRoute: SupportRoute,
   TechnologyRoute: TechnologyRoute,

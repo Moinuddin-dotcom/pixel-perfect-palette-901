@@ -1,9 +1,10 @@
-import { Link } from "@tanstack/react-router";
-import { Search, ShoppingBag, User, Menu } from "lucide-react";
-import { useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Search, ShoppingBag, User, Menu, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 const NAV = [
+  { to: "/dashboard", label: "Dashboard" },
   { to: "/products", label: "Products" },
   { to: "/technology", label: "Technology" },
   { to: "/learn", label: "Learn" },
@@ -12,7 +13,24 @@ const NAV = [
 ] as const;
 
 export function SiteHeader() {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+    if (stored) {
+      try {
+        setUser(JSON.parse(stored));
+      } catch (e) {}
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate({ to: "/login" });
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
@@ -41,9 +59,17 @@ export function SiteHeader() {
           <Button variant="ghost" size="icon" aria-label="Search">
             <Search className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="icon" aria-label="Account" asChild>
-            <Link to="/auth"><User className="h-4 w-4" /></Link>
-          </Button>
+          
+          {user ? (
+            <Button variant="ghost" size="icon" aria-label="Logout" onClick={handleLogout} title={`Logged in as ${user.name}`}>
+              <LogOut className="h-4 w-4 text-red-500" />
+            </Button>
+          ) : (
+            <Button variant="ghost" size="icon" aria-label="Account" asChild>
+              <Link to="/auth"><User className="h-4 w-4" /></Link>
+            </Button>
+          )}
+
           <Button variant="ghost" size="icon" aria-label="Cart" asChild>
             <Link to="/cart"><ShoppingBag className="h-4 w-4" /></Link>
           </Button>
