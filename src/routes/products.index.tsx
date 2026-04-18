@@ -2,13 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Badge } from "@/components/ui/badge";
 import { SiteShell } from "@/components/site/SiteShell";
 import heroImg from "@/assets/hero-headphones.jpg";
-import { getProducts } from "@/lib/server/products";
+import { getActiveProducts } from "@/lib/server/products";
 import { getCategories } from "@/lib/server/categories";
 
 export const Route = createFileRoute("/products/")({
   loader: async () => {
     const [products, categories] = await Promise.all([
-      getProducts(),
+      getActiveProducts(),
       getCategories(),
     ]);
     return { products, categories };
@@ -109,9 +109,9 @@ function ProductsPage() {
                   loading="lazy"
                   className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105 bg-muted/20"
                 />
-                {!p.isActive && (
-                  <Badge className="absolute left-3 top-3 rounded-full px-3 py-1 bg-red-500 text-white hover:bg-red-600">
-                    Draft
+                {p.badge && (
+                  <Badge className="absolute left-3 top-3 rounded-full px-3 py-1 border-primary/20 bg-primary/10 text-primary hover:bg-primary/20 backdrop-blur-md shadow-sm">
+                    {p.badge.name}
                   </Badge>
                 )}
                 {p.quantity === 0 && (

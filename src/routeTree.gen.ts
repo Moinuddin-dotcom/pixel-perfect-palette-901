@@ -25,8 +25,10 @@ import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as DashboardProductsIndexRouteImport } from './routes/dashboard.products.index'
 import { Route as DashboardCategoriesIndexRouteImport } from './routes/dashboard.categories.index'
+import { Route as DashboardBadgesIndexRouteImport } from './routes/dashboard.badges.index'
 import { Route as DashboardProductsCreateRouteImport } from './routes/dashboard.products.create'
 import { Route as DashboardCategoriesCreateRouteImport } from './routes/dashboard.categories.create'
+import { Route as DashboardBadgesCreateRouteImport } from './routes/dashboard.badges.create'
 
 const TechnologyRoute = TechnologyRouteImport.update({
   id: '/technology',
@@ -109,6 +111,11 @@ const DashboardCategoriesIndexRoute =
     path: '/categories/',
     getParentRoute: () => DashboardRoute,
   } as any)
+const DashboardBadgesIndexRoute = DashboardBadgesIndexRouteImport.update({
+  id: '/badges/',
+  path: '/badges/',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardProductsCreateRoute = DashboardProductsCreateRouteImport.update({
   id: '/products/create',
   path: '/products/create',
@@ -120,6 +127,11 @@ const DashboardCategoriesCreateRoute =
     path: '/categories/create',
     getParentRoute: () => DashboardRoute,
   } as any)
+const DashboardBadgesCreateRoute = DashboardBadgesCreateRouteImport.update({
+  id: '/badges/create',
+  path: '/badges/create',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -136,8 +148,10 @@ export interface FileRoutesByFullPath {
   '/products/$slug': typeof ProductsSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/products/': typeof ProductsIndexRoute
+  '/dashboard/badges/create': typeof DashboardBadgesCreateRoute
   '/dashboard/categories/create': typeof DashboardCategoriesCreateRoute
   '/dashboard/products/create': typeof DashboardProductsCreateRoute
+  '/dashboard/badges/': typeof DashboardBadgesIndexRoute
   '/dashboard/categories/': typeof DashboardCategoriesIndexRoute
   '/dashboard/products/': typeof DashboardProductsIndexRoute
 }
@@ -154,8 +168,10 @@ export interface FileRoutesByTo {
   '/products/$slug': typeof ProductsSlugRoute
   '/dashboard': typeof DashboardIndexRoute
   '/products': typeof ProductsIndexRoute
+  '/dashboard/badges/create': typeof DashboardBadgesCreateRoute
   '/dashboard/categories/create': typeof DashboardCategoriesCreateRoute
   '/dashboard/products/create': typeof DashboardProductsCreateRoute
+  '/dashboard/badges': typeof DashboardBadgesIndexRoute
   '/dashboard/categories': typeof DashboardCategoriesIndexRoute
   '/dashboard/products': typeof DashboardProductsIndexRoute
 }
@@ -175,8 +191,10 @@ export interface FileRoutesById {
   '/products/$slug': typeof ProductsSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/products/': typeof ProductsIndexRoute
+  '/dashboard/badges/create': typeof DashboardBadgesCreateRoute
   '/dashboard/categories/create': typeof DashboardCategoriesCreateRoute
   '/dashboard/products/create': typeof DashboardProductsCreateRoute
+  '/dashboard/badges/': typeof DashboardBadgesIndexRoute
   '/dashboard/categories/': typeof DashboardCategoriesIndexRoute
   '/dashboard/products/': typeof DashboardProductsIndexRoute
 }
@@ -197,8 +215,10 @@ export interface FileRouteTypes {
     | '/products/$slug'
     | '/dashboard/'
     | '/products/'
+    | '/dashboard/badges/create'
     | '/dashboard/categories/create'
     | '/dashboard/products/create'
+    | '/dashboard/badges/'
     | '/dashboard/categories/'
     | '/dashboard/products/'
   fileRoutesByTo: FileRoutesByTo
@@ -215,8 +235,10 @@ export interface FileRouteTypes {
     | '/products/$slug'
     | '/dashboard'
     | '/products'
+    | '/dashboard/badges/create'
     | '/dashboard/categories/create'
     | '/dashboard/products/create'
+    | '/dashboard/badges'
     | '/dashboard/categories'
     | '/dashboard/products'
   id:
@@ -235,8 +257,10 @@ export interface FileRouteTypes {
     | '/products/$slug'
     | '/dashboard/'
     | '/products/'
+    | '/dashboard/badges/create'
     | '/dashboard/categories/create'
     | '/dashboard/products/create'
+    | '/dashboard/badges/'
     | '/dashboard/categories/'
     | '/dashboard/products/'
   fileRoutesById: FileRoutesById
@@ -369,6 +393,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardCategoriesIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/badges/': {
+      id: '/dashboard/badges/'
+      path: '/badges'
+      fullPath: '/dashboard/badges/'
+      preLoaderRoute: typeof DashboardBadgesIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/products/create': {
       id: '/dashboard/products/create'
       path: '/products/create'
@@ -383,21 +414,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardCategoriesCreateRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/badges/create': {
+      id: '/dashboard/badges/create'
+      path: '/badges/create'
+      fullPath: '/dashboard/badges/create'
+      preLoaderRoute: typeof DashboardBadgesCreateRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
 interface DashboardRouteChildren {
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardBadgesCreateRoute: typeof DashboardBadgesCreateRoute
   DashboardCategoriesCreateRoute: typeof DashboardCategoriesCreateRoute
   DashboardProductsCreateRoute: typeof DashboardProductsCreateRoute
+  DashboardBadgesIndexRoute: typeof DashboardBadgesIndexRoute
   DashboardCategoriesIndexRoute: typeof DashboardCategoriesIndexRoute
   DashboardProductsIndexRoute: typeof DashboardProductsIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardBadgesCreateRoute: DashboardBadgesCreateRoute,
   DashboardCategoriesCreateRoute: DashboardCategoriesCreateRoute,
   DashboardProductsCreateRoute: DashboardProductsCreateRoute,
+  DashboardBadgesIndexRoute: DashboardBadgesIndexRoute,
   DashboardCategoriesIndexRoute: DashboardCategoriesIndexRoute,
   DashboardProductsIndexRoute: DashboardProductsIndexRoute,
 }

@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { getCategories } from "@/lib/server/categories";
+import { getBadges } from "@/lib/server/badges";
 import { createProductFn } from "@/lib/server/products";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,8 @@ import toast from "react-hot-toast";
 export const Route = createFileRoute("/dashboard/products/create")({
   loader: async () => {
     const categories = await getCategories();
-    return { categories };
+    const badges = await getBadges();
+    return { categories, badges };
   },
   component: CreateProductPage,
 });
@@ -17,7 +19,7 @@ export const Route = createFileRoute("/dashboard/products/create")({
 // Backend will handle the Cloudinary upload using the API credentials
 
 function CreateProductPage() {
-  const { categories } = Route.useLoaderData();
+  const { categories, badges } = Route.useLoaderData();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState<File[]>([]);
@@ -88,6 +90,7 @@ function CreateProductPage() {
         name: formData.get("name") as string,
         slug: formData.get("slug") as string,
         category: formData.get("category") as string,
+        badge: (formData.get("badge") as string) || undefined,
         brand: formData.get("brand") as string,
         description: formData.get("description") as string,
         variants,
@@ -100,7 +103,7 @@ function CreateProductPage() {
       toast.loading("Saving product...", { id: "save" });
       await createProductFn({ data });
       toast.success("Product created successfully!", { id: "save" });
-      navigate({ to: "/dashboard" });
+      navigate({ to: "/dashboard/products" });
     } catch (err: any) {
       toast.error(err.message || "Failed to create product", { id: "save" });
       // Clear the upload loading toast if it errored out there
@@ -240,6 +243,20 @@ function CreateProductPage() {
                 <option value="">Select a category...</option>
                 {categories.map((cat: any) => (
                   <option key={cat._id} value={cat._id}>{cat.name}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="badge" className="text-sm font-medium">Badge</label>
+              <select 
+                id="badge" 
+                name="badge" 
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              >
+                <option value="">Select a badge (optional)...</option>
+                {badges.map((badge: any) => (
+                  <option key={badge._id} value={badge._id}>{badge.name}</option>
                 ))}
               </select>
             </div>

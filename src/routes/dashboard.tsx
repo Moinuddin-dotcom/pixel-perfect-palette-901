@@ -2,7 +2,7 @@ import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import { useState } from "react";
 import { 
   LayoutDashboard, ShoppingCart, Users, Package, 
-  Settings, LogOut, Bell, Search, Layers, PlusCircle, ChevronsUpDown
+  Settings, LogOut, Bell, Search, Layers, PlusCircle, ChevronsUpDown, Tag
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
@@ -16,6 +16,8 @@ export const Route = createFileRoute("/dashboard")({
 
 function DashboardLayout() {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const [isBadgesOpen, setIsBadgesOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -42,24 +44,73 @@ function DashboardLayout() {
             <div className="mt-4 mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Catalog
             </div>
-            <Link 
-              to="/dashboard/categories" 
-              activeProps={{ className: "bg-primary/5 text-foreground" }}
-              inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
-            >
-              <Layers className="h-4 w-4" />
-              All Categories
-            </Link>
-            <Link 
-              to="/dashboard/categories/create" 
-              activeProps={{ className: "bg-primary/5 text-foreground" }}
-              inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
-            >
-              <PlusCircle className="h-4 w-4" />
-              Create Category
-            </Link>
+            <div>
+              <button 
+                onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
+                className="flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/5 hover:text-foreground"
+              >
+                <div className="flex items-center gap-3">
+                  <Layers className="h-4 w-4" />
+                  Categories
+                </div>
+                <ChevronsUpDown className="h-4 w-4" />
+              </button>
+              
+              {isCategoriesOpen && (
+                <div className="mt-1 flex flex-col gap-1 pl-10 pr-3">
+                  <Link 
+                    to="/dashboard/categories" 
+                    activeProps={{ className: "bg-primary/5 text-foreground" }}
+                    inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+                  >
+                    All Categories
+                  </Link>
+                  <Link 
+                    to="/dashboard/categories/create" 
+                    activeProps={{ className: "bg-primary/5 text-foreground" }}
+                    inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+                  >
+                    Create Category
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            <div>
+              <button 
+                onClick={() => setIsBadgesOpen(!isBadgesOpen)}
+                className="flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/5 hover:text-foreground"
+              >
+                <div className="flex items-center gap-3">
+                  <Tag className="h-4 w-4" />
+                  Badges
+                </div>
+                <ChevronsUpDown className="h-4 w-4" />
+              </button>
+              
+              {isBadgesOpen && (
+                <div className="mt-1 flex flex-col gap-1 pl-10 pr-3">
+                  <Link 
+                    to="/dashboard/badges" 
+                    activeProps={{ className: "bg-primary/5 text-foreground" }}
+                    inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+                  >
+                    View All Badges
+                  </Link>
+                  <Link 
+                    to="/dashboard/badges/create" 
+                    activeProps={{ className: "bg-primary/5 text-foreground" }}
+                    inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+                  >
+                    Create Badge
+                  </Link>
+                </div>
+              )}
+            </div>
 
             <div className="mt-4 mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Store

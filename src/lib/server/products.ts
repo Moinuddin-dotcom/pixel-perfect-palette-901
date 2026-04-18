@@ -8,6 +8,7 @@ const productSchema = z.object({
   slug: z.string().min(2),
   description: z.string().min(10),
   category: z.string(),
+  badge: z.string().optional(),
   brand: z.string().optional(),
   variants: z.array(z.string()).optional(),
   images: z.array(z.string()).max(5),
@@ -43,7 +44,7 @@ export const createProductFn = createServerFn({ method: "POST" })
     const productData = { ...data, images: uploadedImages };
     const newProduct = new Product(productData);
     await newProduct.save();
-    return JSON.parse(JSON.stringify(newProduct));
+    return JSON.parse(JSON.stringify(newProduct.toJSON()));
   });
 
 export const getProducts = createServerFn({ method: "GET" })
@@ -51,6 +52,18 @@ export const getProducts = createServerFn({ method: "GET" })
     await connectDB();
     const products = await Product.find({})
       .populate('category', 'name')
+      .populate('badge', 'name slug')
+      .sort({ createdAt: -1 })
+      .lean();
+    return JSON.parse(JSON.stringify(products));
+  });
+
+export const getActiveProducts = createServerFn({ method: "GET" })
+  .handler(async () => {
+    await connectDB();
+    const products = await Product.find({ isActive: true })
+      .populate('category', 'name')
+      .populate('badge', 'name slug')
       .sort({ createdAt: -1 })
       .lean();
     return JSON.parse(JSON.stringify(products));
@@ -62,6 +75,7 @@ export const getProductBySlug = createServerFn({ method: "GET" })
     await connectDB();
     const product = await Product.findOne({ slug })
       .populate('category', 'name')
+      .populate('badge', 'name slug')
       .lean();
     
     if (!product) {

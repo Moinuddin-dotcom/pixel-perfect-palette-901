@@ -4,12 +4,18 @@ import { PlusCircle, Package, Trash2, ToggleLeft, ToggleRight, Edit } from "luci
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/products/")({
   loader: async () => {
     const products = await getProducts();
     return { products };
   },
+  pendingComponent: () => (
+    <div className="flex h-[50vh] items-center justify-center">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    </div>
+  ),
   component: ProductsPage,
 });
 
