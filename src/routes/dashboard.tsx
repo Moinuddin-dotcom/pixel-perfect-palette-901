@@ -115,10 +115,15 @@ function DashboardLayout() {
             <div className="mt-4 mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Store
             </div>
-            <a href="#" className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/5 hover:text-foreground">
+            <Link 
+              to="/dashboard/orders" 
+              activeProps={{ className: "bg-primary/5 text-foreground" }}
+              inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
+              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
+            >
               <ShoppingCart className="h-4 w-4" />
               Orders
-            </a>
+            </Link>
             
             <div>
               <button 

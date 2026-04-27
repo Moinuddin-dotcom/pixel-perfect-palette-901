@@ -22,8 +22,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
+import { Route as PaymentSslcommerzMockRouteImport } from './routes/payment/sslcommerz-mock'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
 import { Route as DashboardProductsIndexRouteImport } from './routes/dashboard.products.index'
+import { Route as DashboardOrdersIndexRouteImport } from './routes/dashboard.orders.index'
 import { Route as DashboardCategoriesIndexRouteImport } from './routes/dashboard.categories.index'
 import { Route as DashboardBadgesIndexRouteImport } from './routes/dashboard.badges.index'
 import { Route as DashboardProductsCreateRouteImport } from './routes/dashboard.products.create'
@@ -95,6 +97,11 @@ const ProductsSlugRoute = ProductsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ProductsRoute,
 } as any)
+const PaymentSslcommerzMockRoute = PaymentSslcommerzMockRouteImport.update({
+  id: '/payment/sslcommerz-mock',
+  path: '/payment/sslcommerz-mock',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
   id: '/checkout/success',
   path: '/checkout/success',
@@ -103,6 +110,11 @@ const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
 const DashboardProductsIndexRoute = DashboardProductsIndexRouteImport.update({
   id: '/products/',
   path: '/products/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardOrdersIndexRoute = DashboardOrdersIndexRouteImport.update({
+  id: '/orders/',
+  path: '/orders/',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardCategoriesIndexRoute =
@@ -145,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/support': typeof SupportRoute
   '/technology': typeof TechnologyRoute
   '/checkout/success': typeof CheckoutSuccessRoute
+  '/payment/sslcommerz-mock': typeof PaymentSslcommerzMockRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/products/': typeof ProductsIndexRoute
@@ -153,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/products/create': typeof DashboardProductsCreateRoute
   '/dashboard/badges/': typeof DashboardBadgesIndexRoute
   '/dashboard/categories/': typeof DashboardCategoriesIndexRoute
+  '/dashboard/orders/': typeof DashboardOrdersIndexRoute
   '/dashboard/products/': typeof DashboardProductsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -165,6 +179,7 @@ export interface FileRoutesByTo {
   '/support': typeof SupportRoute
   '/technology': typeof TechnologyRoute
   '/checkout/success': typeof CheckoutSuccessRoute
+  '/payment/sslcommerz-mock': typeof PaymentSslcommerzMockRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/dashboard': typeof DashboardIndexRoute
   '/products': typeof ProductsIndexRoute
@@ -173,6 +188,7 @@ export interface FileRoutesByTo {
   '/dashboard/products/create': typeof DashboardProductsCreateRoute
   '/dashboard/badges': typeof DashboardBadgesIndexRoute
   '/dashboard/categories': typeof DashboardCategoriesIndexRoute
+  '/dashboard/orders': typeof DashboardOrdersIndexRoute
   '/dashboard/products': typeof DashboardProductsIndexRoute
 }
 export interface FileRoutesById {
@@ -188,6 +204,7 @@ export interface FileRoutesById {
   '/support': typeof SupportRoute
   '/technology': typeof TechnologyRoute
   '/checkout/success': typeof CheckoutSuccessRoute
+  '/payment/sslcommerz-mock': typeof PaymentSslcommerzMockRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/products/': typeof ProductsIndexRoute
@@ -196,6 +213,7 @@ export interface FileRoutesById {
   '/dashboard/products/create': typeof DashboardProductsCreateRoute
   '/dashboard/badges/': typeof DashboardBadgesIndexRoute
   '/dashboard/categories/': typeof DashboardCategoriesIndexRoute
+  '/dashboard/orders/': typeof DashboardOrdersIndexRoute
   '/dashboard/products/': typeof DashboardProductsIndexRoute
 }
 export interface FileRouteTypes {
@@ -212,6 +230,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/technology'
     | '/checkout/success'
+    | '/payment/sslcommerz-mock'
     | '/products/$slug'
     | '/dashboard/'
     | '/products/'
@@ -220,6 +239,7 @@ export interface FileRouteTypes {
     | '/dashboard/products/create'
     | '/dashboard/badges/'
     | '/dashboard/categories/'
+    | '/dashboard/orders/'
     | '/dashboard/products/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -232,6 +252,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/technology'
     | '/checkout/success'
+    | '/payment/sslcommerz-mock'
     | '/products/$slug'
     | '/dashboard'
     | '/products'
@@ -240,6 +261,7 @@ export interface FileRouteTypes {
     | '/dashboard/products/create'
     | '/dashboard/badges'
     | '/dashboard/categories'
+    | '/dashboard/orders'
     | '/dashboard/products'
   id:
     | '__root__'
@@ -254,6 +276,7 @@ export interface FileRouteTypes {
     | '/support'
     | '/technology'
     | '/checkout/success'
+    | '/payment/sslcommerz-mock'
     | '/products/$slug'
     | '/dashboard/'
     | '/products/'
@@ -262,6 +285,7 @@ export interface FileRouteTypes {
     | '/dashboard/products/create'
     | '/dashboard/badges/'
     | '/dashboard/categories/'
+    | '/dashboard/orders/'
     | '/dashboard/products/'
   fileRoutesById: FileRoutesById
 }
@@ -277,6 +301,7 @@ export interface RootRouteChildren {
   SupportRoute: typeof SupportRoute
   TechnologyRoute: typeof TechnologyRoute
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
+  PaymentSslcommerzMockRoute: typeof PaymentSslcommerzMockRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -372,6 +397,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsSlugRouteImport
       parentRoute: typeof ProductsRoute
     }
+    '/payment/sslcommerz-mock': {
+      id: '/payment/sslcommerz-mock'
+      path: '/payment/sslcommerz-mock'
+      fullPath: '/payment/sslcommerz-mock'
+      preLoaderRoute: typeof PaymentSslcommerzMockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout/success': {
       id: '/checkout/success'
       path: '/checkout/success'
@@ -384,6 +416,13 @@ declare module '@tanstack/react-router' {
       path: '/products'
       fullPath: '/dashboard/products/'
       preLoaderRoute: typeof DashboardProductsIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/orders/': {
+      id: '/dashboard/orders/'
+      path: '/orders'
+      fullPath: '/dashboard/orders/'
+      preLoaderRoute: typeof DashboardOrdersIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/categories/': {
@@ -431,6 +470,7 @@ interface DashboardRouteChildren {
   DashboardProductsCreateRoute: typeof DashboardProductsCreateRoute
   DashboardBadgesIndexRoute: typeof DashboardBadgesIndexRoute
   DashboardCategoriesIndexRoute: typeof DashboardCategoriesIndexRoute
+  DashboardOrdersIndexRoute: typeof DashboardOrdersIndexRoute
   DashboardProductsIndexRoute: typeof DashboardProductsIndexRoute
 }
 
@@ -441,6 +481,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardProductsCreateRoute: DashboardProductsCreateRoute,
   DashboardBadgesIndexRoute: DashboardBadgesIndexRoute,
   DashboardCategoriesIndexRoute: DashboardCategoriesIndexRoute,
+  DashboardOrdersIndexRoute: DashboardOrdersIndexRoute,
   DashboardProductsIndexRoute: DashboardProductsIndexRoute,
 }
 
@@ -474,6 +515,7 @@ const rootRouteChildren: RootRouteChildren = {
   SupportRoute: SupportRoute,
   TechnologyRoute: TechnologyRoute,
   CheckoutSuccessRoute: CheckoutSuccessRoute,
+  PaymentSslcommerzMockRoute: PaymentSslcommerzMockRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

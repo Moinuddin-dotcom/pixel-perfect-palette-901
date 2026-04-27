@@ -7,11 +7,16 @@ import { getCategories } from "@/lib/server/categories";
 
 export const Route = createFileRoute("/products/")({
   loader: async () => {
-    const [products, categories] = await Promise.all([
-      getActiveProducts(),
-      getCategories(),
-    ]);
-    return { products, categories };
+    try {
+      const [products, categories] = await Promise.all([
+        getActiveProducts(),
+        getCategories(),
+      ]);
+      return { products, categories, error: null };
+    } catch (error: any) {
+      console.error("Failed to load products/categories:", error);
+      return { products: [], categories: [], error: error.message || "Failed to load database" };
+    }
   },
   head: () => ({
     meta: [
@@ -36,7 +41,7 @@ function ProductsPage() {
   const searchParams = Route.useSearch() as any;
   const category = searchParams.category || "all";
   const navigate = Route.useNavigate();
-  const { products, categories } = Route.useLoaderData();
+  const { products, categories, error } = Route.useLoaderData();
 
   const activeCategoryList = [
     { id: "all", label: "All" },
@@ -85,7 +90,15 @@ function ProductsPage() {
           })}
         </div>
 
-        {filtered.length === 0 && (
+        {error && (
+          <div className="mt-10 py-10 px-6 text-center bg-red-500/10 rounded-2xl border border-red-500/20 text-red-600">
+            <h3 className="text-xl font-medium">Database Connection Error</h3>
+            <p className="mt-2">Failed to connect to the database. Have you added your MONGODB_URI environment variable?</p>
+            <p className="mt-1 text-sm opacity-80">{error}</p>
+          </div>
+        )}
+
+        {!error && filtered.length === 0 && (
           <div className="mt-10 py-20 text-center bg-muted/30 rounded-2xl border border-border/50">
             <h3 className="text-xl font-medium text-foreground">No products found</h3>
             <p className="mt-2 text-muted-foreground">We couldn't find any products in this category.</p>

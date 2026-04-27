@@ -1,7 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
 import { connectDB } from "../db";
 import { Product } from "../models/Product";
+import { Category } from "../models/Category";
+import { Badge } from "../models/Badge";
 import { z } from "zod";
+
+// Ensure models are registered to prevent "Schema hasn't been registered" in Vercel serverless builds
+const _models = { Category, Badge };
 
 const productSchema = z.object({
   name: z.string().min(2),

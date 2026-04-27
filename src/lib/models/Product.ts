@@ -18,7 +18,4 @@ const productSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-if (mongoose.models.Product) {
-  delete mongoose.models.Product;
-}
-export const Product = mongoose.model("Product", productSchema);
+export const Product = mongoose.models.Product || mongoose.model("Product", productSchema);

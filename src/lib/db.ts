@@ -1,4 +1,10 @@
 import mongoose from "mongoose";
+import { Category } from "./models/Category";
+import { Badge } from "./models/Badge";
+import { Product } from "./models/Product";
+import { Order } from "./models/Order";
+
+export const globalModels = { Category, Badge, Product, Order };
 
 const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://test:714r9IiM67WFHCJe@cluster0.afwrd.mongodb.net/?appName=Cluster0";
 

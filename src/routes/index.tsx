@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SiteShell } from "@/components/site/SiteShell";
-import { PRODUCTS, getFeatured } from "@/lib/products";
+import { getActiveProducts } from "@/lib/server/products";
 import heroImg from "@/assets/hero-headphones.jpg";
 import productHeadphones from "@/assets/product-headphones-black.jpg";
 import lifestyleSpeaker from "@/assets/lifestyle-speaker.jpg";
@@ -11,6 +11,14 @@ import lifestyleSoundbar from "@/assets/lifestyle-soundbar.jpg";
 import portraitProducer from "@/assets/portrait-producer.jpg";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    try {
+      const products = await getActiveProducts();
+      return { newProducts: products.slice(0, 4) };
+    } catch {
+      return { newProducts: [] };
+    }
+  },
   head: () => ({
     meta: [
       { title: "GadgetHive — Listen Without Limits" },
@@ -34,8 +42,7 @@ export const Route = createFileRoute("/")({
 });
 
 function LandingPage() {
-  const featured = getFeatured();
-  const all = PRODUCTS.slice(0, 4);
+  const { newProducts } = Route.useLoaderData();
 
   return (
     <SiteShell>
@@ -152,7 +159,7 @@ function LandingPage() {
           </div>
 
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {featured.concat(all).slice(0, 4).map((p) => (
+            {newProducts.map((p: any) => (
               <Link
                 key={p.slug}
                 to="/products/$slug"
@@ -161,33 +168,34 @@ function LandingPage() {
               >
                 <div className="relative overflow-hidden rounded-2xl bg-card">
                   <img
-                    src={p.image}
+                    src={p.images?.[0] || heroImg}
                     alt={p.name}
                     width={1024}
                     height={1024}
                     loading="lazy"
                     className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {p.badge && (
+                  <Badge
+                    className="absolute left-3 top-3 rounded-full px-3 py-1 bg-ember text-ember-foreground hover:bg-ember shadow-md shadow-ember/20"
+                  >
+                    New
+                  </Badge>
+                  {p.badge && p.badge.name !== "New" && p.badge !== "New" && (
                     <Badge
-                      className={`absolute left-3 top-3 rounded-full px-3 py-1 ${
-                        p.badge === "New"
-                          ? "bg-ember text-ember-foreground hover:bg-ember"
-                          : "bg-ink text-cream hover:bg-ink"
-                      }`}
+                      className="absolute right-3 top-3 rounded-full px-3 py-1 bg-ink text-cream hover:bg-ink"
                     >
-                      {p.badge}
+                      {p.badge.name || p.badge}
                     </Badge>
                   )}
                 </div>
                 <div className="mt-4 flex items-start justify-between">
                   <div>
                     <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                      {p.type}
+                      {p.brand || p.category?.name || "Product"}
                     </p>
                     <p className="mt-1 font-medium">{p.name}</p>
                   </div>
-                  <p className="font-medium">${p.price}</p>
+                  <p className="font-medium">${p.discountPrice || p.price}</p>
                 </div>
               </Link>
             ))}
