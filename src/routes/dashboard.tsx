@@ -15,9 +15,9 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 function DashboardLayout() {
-  const [isProductsOpen, setIsProductsOpen] = useState(false);
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [isBadgesOpen, setIsBadgesOpen] = useState(false);
+  const [isProductsOpen, setIsProductsOpen] = useState(true);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
+  const [isBadgesOpen, setIsBadgesOpen] = useState(true);
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -46,6 +46,7 @@ function DashboardLayout() {
             </div>
             <div>
               <button 
+                type="button"
                 onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
                 className="flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/5 hover:text-foreground"
               >
@@ -64,7 +65,7 @@ function DashboardLayout() {
                     inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
                     className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
                   >
-                    All Categories
+                    View all category
                   </Link>
                   <Link 
                     to="/dashboard/categories/create" 
@@ -80,6 +81,7 @@ function DashboardLayout() {
 
             <div>
               <button 
+                type="button"
                 onClick={() => setIsBadgesOpen(!isBadgesOpen)}
                 className="flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/5 hover:text-foreground"
               >
@@ -98,7 +100,7 @@ function DashboardLayout() {
                     inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
                     className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
                   >
-                    View All Badges
+                    View all Badges
                   </Link>
                   <Link 
                     to="/dashboard/badges/create" 
@@ -106,7 +108,7 @@ function DashboardLayout() {
                     inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
                     className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
                   >
-                    Create Badge
+                    Create Badges
                   </Link>
                 </div>
               )}
@@ -127,6 +129,7 @@ function DashboardLayout() {
             
             <div>
               <button 
+                type="button"
                 onClick={() => setIsProductsOpen(!isProductsOpen)}
                 className="flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/5 hover:text-foreground"
               >
@@ -145,7 +148,7 @@ function DashboardLayout() {
                     inactiveProps={{ className: "text-muted-foreground hover:bg-primary/5 hover:text-foreground" }}
                     className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
                   >
-                    All Products
+                    View all product
                   </Link>
                   <Link 
                     to="/dashboard/products/create" 
